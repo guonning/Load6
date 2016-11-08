@@ -49,14 +49,21 @@ public class ArticleHandlerRunnable implements Runnable {
                 }
             }
             final String finalHref = href;
-            executorService.execute(() -> {
-                String article = HttpDownload.getDefault().get(baseUrl + finalHref);
-                Document articleDoc = Jsoup.parse(article);
-                Matcher matcher = pattern.matcher(articleDoc.toString());
-                if (matcher.find()) {
-                    System.out.println(magnetHeader + matcher.group() + "\t" + articleDoc.title());
+            executorService.submit(() -> {
+                try {
+                    String article = HttpDownload.getDefault().get(baseUrl + finalHref);
+                    Document articleDoc = Jsoup.parse(article);
+                    Matcher matcher = pattern.matcher(articleDoc.toString());
+                    if (matcher.find()) {
+                        System.out.println(magnetHeader + matcher.group() + "\t" + articleDoc.title());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
+        }
+        if (!executorService.isShutdown()) {
+            executorService.shutdown();
         }
     }
 }
