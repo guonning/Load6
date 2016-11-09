@@ -2,7 +2,7 @@ package xyz.bpazy.handler;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import xyz.bpazy.Application;
+import xyz.bpazy.models.Application;
 import xyz.bpazy.helper.HttpDownload;
 
 import java.util.concurrent.ArrayBlockingQueue;

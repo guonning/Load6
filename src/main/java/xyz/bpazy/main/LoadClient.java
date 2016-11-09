@@ -1,4 +1,4 @@
-package xyz.bpazy;
+package xyz.bpazy.main;
 
 import xyz.bpazy.handler.ArticleHandlerRunnable;
 import xyz.bpazy.handler.ScanArticleRunnable;
