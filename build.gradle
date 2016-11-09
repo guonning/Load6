@@ -19,7 +19,7 @@ dependencies {
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Version': version,
-                'Main-Class': 'Main'
+                'Main-Class': 'xyz.bpazy.main.Main'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

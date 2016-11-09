@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         RunParameter para = new RunParameter();
         JCommander jComm = new JCommander(para, args);
+        LoadClient client = new LoadClient();
         if (para.help) {
             jComm.usage();
             return;
@@ -19,8 +20,9 @@ public class Main {
         if (!para.file.equals("")) {
             System.setOut(new RedirectPrintStream(para.file));
         }
-        LoadClient client = new LoadClient();
-        client.setProxy(para.proxy);
+        if (!para.proxy.equals("")) {
+            client.setProxy(para.proxy);
+        }
         client.start();
     }
 }

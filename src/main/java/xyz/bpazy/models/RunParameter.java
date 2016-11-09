@@ -9,7 +9,7 @@ import com.beust.jcommander.Parameter;
 public class RunParameter {
 
     @Parameter(names = {"-p", "--proxy"}, description = "Proxy server. such as 127.0.0.1:8080")
-    public String proxy;
+    public String proxy = "";
 
     @Parameter(names = "--help", help = true)
     public boolean help;
