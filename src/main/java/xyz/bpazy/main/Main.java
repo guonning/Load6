@@ -13,6 +13,7 @@ public class Main {
         RunParameter para = new RunParameter();
         JCommander jComm = new JCommander(para, args);
         LoadClient client = new LoadClient();
+        System.out.println("crawler running...");
         if (para.help) {
             jComm.usage();
             return;

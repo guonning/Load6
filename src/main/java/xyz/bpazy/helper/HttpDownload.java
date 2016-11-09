@@ -44,7 +44,7 @@ public class HttpDownload {
                 return new String(bytes, "GBK");
             } catch (UnsupportedEncodingException | HttpRequest.HttpRequestException e) {
                 if (e instanceof HttpRequest.HttpRequestException) {
-                    System.out.printf("connect %s failed. Try again later.#%d\n", url, i + 1);
+                    System.out.printf("connect %s failed. Try again later.#%d\r\n", url, i + 1);
                 } else {
                     e.printStackTrace();
                 }
