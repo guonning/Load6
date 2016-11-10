@@ -16,4 +16,10 @@ public class RunParameter {
 
     @Parameter(names = {"-o", "--out"}, description = "Output path.")
     public String file = "";
+
+    @Parameter(names = {"-s", "--size"}, description = "Program will scan page number from 1 to N.")
+    public int pageSize = 1;
+
+    @Parameter(names = {"-u", "--url"}, description = "Url of Caoliu.")
+    public String baseUrl = "http://t66y.com/";
 }

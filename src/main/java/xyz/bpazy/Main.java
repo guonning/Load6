@@ -1,6 +1,7 @@
-package xyz.bpazy.main;
+package xyz.bpazy;
 
 import com.beust.jcommander.JCommander;
+import xyz.bpazy.client.LoadClient;
 import xyz.bpazy.helper.RedirectPrintStream;
 import xyz.bpazy.models.RunParameter;
 
@@ -12,18 +13,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         RunParameter para = new RunParameter();
         JCommander jComm = new JCommander(para, args);
-        LoadClient client = new LoadClient();
+        LoadClient client = new LoadClient(para);
         if (para.help) {
             jComm.usage();
             return;
         }
         System.out.println("crawler running...");
-        if (!para.file.equals("")) {
-            System.setOut(new RedirectPrintStream(para.file));
-        }
-        if (!para.proxy.equals("")) {
-            client.setProxy(para.proxy);
-        }
+        System.setOut(new RedirectPrintStream(para));
         client.start();
     }
 }

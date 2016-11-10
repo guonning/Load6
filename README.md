@@ -19,6 +19,12 @@ Usage: <main class> [options]
       Output path.
     -p, --proxy
       Proxy server. such as 127.0.0.1:8080
+    -s, --size
+      Program will scan page number from 1 to N.
+      Default: 1
+    -u, --url
+      Url of Caoliu.
+      Default: http://t66y.com/
 ```
 
 ### Preview  

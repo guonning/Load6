@@ -13,12 +13,16 @@ public class HttpDownload {
     private int proxyPort;
     private int timeOut = 3000;
 
-    public void setTimeOut(int timeOut) {
-        this.timeOut = timeOut;
-    }
-
     private HttpDownload() {
 
+    }
+
+    public static HttpDownload getDefault() {
+        return SingletonHandler.singletonHelper;
+    }
+
+    public void setTimeOut(int timeOut) {
+        this.timeOut = timeOut;
     }
 
     public void setProxy(String host, int port) {
@@ -55,9 +59,5 @@ public class HttpDownload {
 
     private static class SingletonHandler {
         private static HttpDownload singletonHelper = new HttpDownload();
-    }
-
-    public static HttpDownload getDefault() {
-        return SingletonHandler.singletonHelper;
     }
 }

@@ -1,5 +1,7 @@
 package xyz.bpazy.helper;
 
+import xyz.bpazy.models.RunParameter;
+
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -12,11 +14,11 @@ import java.util.List;
 public class RedirectPrintStream extends PrintStream {
     private List<PrintStream> target = new ArrayList<>();
 
-    public RedirectPrintStream(String... fileName) throws FileNotFoundException {
-        super(fileName[0]);
+    public RedirectPrintStream(RunParameter par) throws FileNotFoundException {
+        super(System.out);
         target.add(new PrintStream(System.out));
-        for (String f : fileName) {
-            PrintStream p = new PrintStream(f);
+        if (!par.file.equals("")) {
+            PrintStream p = new PrintStream(par.file);
             target.add(p);
         }
     }

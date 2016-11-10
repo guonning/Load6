@@ -1,8 +1,9 @@
-package xyz.bpazy.main;
+package xyz.bpazy.client;
 
 import xyz.bpazy.handler.ArticleHandlerRunnable;
 import xyz.bpazy.handler.ScanArticleRunnable;
 import xyz.bpazy.helper.HttpDownload;
+import xyz.bpazy.models.RunParameter;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -14,10 +15,25 @@ public class LoadClient {
     private String proxyHost;
     private int proxyPort;
     private boolean useProxy;
-    private String baseUrl = "http://t66y.com/";
     private ArrayBlockingQueue<String> articleQueue = new ArrayBlockingQueue<>(200);
+    private RunParameter prm;
 
-    public void setProxy(String proxy) {
+    public LoadClient(RunParameter prm) {
+        this.prm = prm;
+        if (!this.prm.proxy.equals("")) {
+            setProxy(this.prm.proxy);
+        }
+    }
+
+    public LoadClient setParameter(RunParameter parameter) {
+        prm = parameter;
+        if (!prm.proxy.equals("")) {
+            setProxy(prm.proxy);
+        }
+        return this;
+    }
+
+    private void setProxy(String proxy) {
         String[] split = proxy.split(":");
         proxyHost = split[0];
         proxyPort = Integer.valueOf(split[1]);
@@ -27,7 +43,7 @@ public class LoadClient {
     public void start() {
         if (useProxy) HttpDownload.getDefault().setProxy(proxyHost, proxyPort);
         HttpDownload.getDefault().setTimeOut(5000);
-        new Thread(new ScanArticleRunnable(articleQueue, baseUrl)).start();
-        new Thread(new ArticleHandlerRunnable(articleQueue, baseUrl)).start();
+        new Thread(new ScanArticleRunnable(articleQueue, prm)).start();
+        new Thread(new ArticleHandlerRunnable(articleQueue, prm)).start();
     }
 }

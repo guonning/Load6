@@ -3,8 +3,9 @@ package xyz.bpazy.handler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import xyz.bpazy.models.Application;
 import xyz.bpazy.helper.HttpDownload;
+import xyz.bpazy.models.Application;
+import xyz.bpazy.models.RunParameter;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -14,25 +15,34 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class ScanArticleRunnable implements Runnable {
 
-    private static final int PAGE_SIZE = 100;
     private ArrayBlockingQueue<String> queue;
-    private String baseUrl;
     private String pageArg = "&search=&page=";
+    private RunParameter prm;
 
-    public ScanArticleRunnable(ArrayBlockingQueue<String> queue, String baseUrl) {
+    public ScanArticleRunnable(ArrayBlockingQueue<String> queue) {
         this.queue = queue;
-        this.baseUrl = baseUrl;
     }
+
+    public ScanArticleRunnable(ArrayBlockingQueue<String> queue, RunParameter prm) {
+        this.queue = queue;
+        this.prm = prm;
+    }
+
+    public ScanArticleRunnable setParameter(RunParameter parameter) {
+        prm = parameter;
+        return this;
+    }
+
 
     @Override
     public void run() {
-        String body = HttpDownload.getDefault().get(baseUrl + "index.php");
+        String body = HttpDownload.getDefault().get(prm.baseUrl + "index.php");
         Document doc = Jsoup.parse(body);
         Elements region = doc.select("tbody#cate_1 h2 a");
-        for (int i = 0; i < PAGE_SIZE; i++) {
+        for (int i = 0; i < prm.pageSize; i++) {
             int finalI = i;
             region.forEach(element1 -> {
-                String extraRegion = HttpDownload.getDefault().get(baseUrl + element1.attr("href") + pageArg +
+                String extraRegion = HttpDownload.getDefault().get(prm.baseUrl + element1.attr("href") + pageArg +
                         (finalI + 1));
                 Document extraDoc = Jsoup.parse(extraRegion);
                 Elements select = extraDoc.select("h3 a");
