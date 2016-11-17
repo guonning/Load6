@@ -25,14 +25,6 @@ public class LoadClient {
         }
     }
 
-    public LoadClient setParameter(RunParameter parameter) {
-        prm = parameter;
-        if (!prm.proxy.equals("")) {
-            setProxy(prm.proxy);
-        }
-        return this;
-    }
-
     private void setProxy(String proxy) {
         String[] split = proxy.split(":");
         proxyHost = split[0];
